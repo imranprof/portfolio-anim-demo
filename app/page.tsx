@@ -15,6 +15,14 @@ export default function Home() {
 
   useGSAP(() => {
     //section 1 card animation
+
+    //continueous animation
+    const tlr = gsap.timeline({ repeat: -1, yoyo: true, repeatDelay: 0 });
+
+    tlr.to(".card1-anim", { y: 15, duration: 1, ease: "none" })
+      .to(".card2-anim", { y: 15, duration: 1, ease: "none" }, "<.4")
+      .to(".card3-anim", { y: 15, duration: 1, ease: "none" }, "<-.4")
+
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ".card-container",
