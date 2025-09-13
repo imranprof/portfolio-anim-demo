@@ -1,11 +1,39 @@
+'use client'
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { useGSAP } from '@gsap/react'
+import { useRef } from "react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".card-container",
+        start: "clamp(top 50%)",
+        // end: "top top",
+        scrub: true,
+        markers: true
+      }
+    });
+
+    tl.to(".card1-anim", { xPercent: 20 })
+      .to(".card3-anim", { xPercent: -20 }, "<")
+      .to(".card1-anim", { yPercent: 200, opacity: .5, rotation: -15, duration: 2 }, ">-1")
+      .to(".card2-anim", { yPercent: 200, opacity: .5, duration: 2 }, "<.07")
+      .to(".card3-anim", { yPercent: 200, opacity: .5, rotation: 15, duration: 2 }, "<.1");
+
+  }, { scope: containerRef });
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen" ref={containerRef}>
       {/* Section 1: Welcome with 3 cards at bottom 50% */}
       <section className="h-screen bg-background flex flex-col">
         {/* Top 50% - Hero content */}
@@ -19,10 +47,10 @@ export default function Home() {
         </div>
 
         {/* Bottom 50% - Cards area (cards are 30% height of viewport) */}
-        <div className="flex-1 flex items-start justify-center pt-8">
+        <div className="card-container flex-1 flex items-start justify-center pt-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-4 w-1/2 max-w-2xl">
             {/* Card 1 */}
-            <Card className="h-[30vh] bg-card hover:shadow-lg transition-shadow duration-300 max-w-[200px]" >
+            <Card className="card1-anim z-[1] h-[30vh] bg-card hover:shadow-lg transition-shadow duration-300 max-w-[200px]" >
               <CardHeader className="pb-3">
                 <div className="w-12 h-12 bg-primary rounded-lg mb-3 flex items-center justify-center">
                   <svg
@@ -44,7 +72,7 @@ export default function Home() {
             </Card>
 
             {/* Card 2 */}
-            <Card className="h-[30vh] bg-card hover:shadow-lg transition-shadow duration-300 max-w-[200px]">
+            <Card className="card2-anim z-[1] h-[30vh] bg-card hover:shadow-lg transition-shadow duration-300 max-w-[200px]">
               <CardHeader className="pb-3">
                 <div className="w-12 h-12 bg-secondary rounded-lg mb-3 flex items-center justify-center">
                   <svg className="w-6 h-6 text-accent-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,7 +94,7 @@ export default function Home() {
             </Card>
 
             {/* Card 3 */}
-            <Card className="h-[30vh] bg-card hover:shadow-lg transition-shadow duration-300 max-w-[200px]">
+            <Card className="card3-anim z-[1] h-[30vh] bg-card hover:shadow-lg transition-shadow duration-300 max-w-[200px]">
               <CardHeader className="pb-3">
                 <div className="w-12 h-12 bg-accent rounded-lg mb-3 flex items-center justify-center">
                   <svg className="w-6 h-6 text-accent-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -98,7 +126,7 @@ export default function Home() {
       </section>
 
       {/* Section 2: Interactive Features */}
-      <section className="h-screen bg-blue-300 flex items-center justify-center">
+      <section className="relative z-[2] h-screen bg-blue-300 flex items-center justify-center">
         <div className="text-center space-y-8 px-4 max-w-4xl">
           <h2 className="text-5xl font-bold text-primary text-balance">Built for Innovation</h2>
           <p className="text-xl text-muted-foreground text-pretty leading-relaxed">
