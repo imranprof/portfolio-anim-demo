@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
+import LenisProviders from './lenisProviders'
 import './globals.css'
+import 'lenis/dist/lenis.css'
 
 export const metadata: Metadata = {
   title: 'Portfolio ap',
@@ -15,8 +15,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        {children}
+      <body className="">
+        <LenisProviders>{children}</LenisProviders>
       </body>
     </html>
   )
