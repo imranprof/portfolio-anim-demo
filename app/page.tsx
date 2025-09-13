@@ -49,7 +49,7 @@ export default function Home() {
         trigger: ".cards-flip-container",
         start: "top 50%",
         end: "top top",
-        markers: true,
+        // markers: true,
         scrub: true
       }
     });
