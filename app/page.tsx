@@ -14,13 +14,14 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
+    //section 1 card animation
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ".card-container",
         start: "clamp(top 50%)",
         // end: "top top",
         scrub: true,
-        markers: true
+        // markers: true
       }
     });
 
@@ -29,6 +30,38 @@ export default function Home() {
       .to(".card1-anim", { yPercent: 200, opacity: .5, rotation: -15, duration: 2 }, ">-.5")
       .to(".card2-anim", { yPercent: 200, opacity: .5, duration: 2 }, "<.07")
       .to(".card3-anim", { yPercent: 200, opacity: .5, rotation: 15, duration: 2 }, "<.07");
+
+    //end
+
+    //section 3 card animaiton
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: ".sec3-container",
+        start: "top top",
+        end: "bottom 50%",
+        pin: true,
+        // markers: true,
+      }
+    });
+
+    const tl2 = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".cards-flip-container",
+        start: "top 50%",
+        end: "top top",
+        markers: true,
+        scrub: true
+      }
+    });
+
+    tl2.from(".flip-card1-anim", { autoAlpha: .5, yPercent: -250, xPercent: 100, rotation: -20, duration: 5 })
+      .from(".flip-card2-anim", { autoAlpha: .5, yPercent: -250, duration: 5 }, "<.03")
+      .from(".flip-card3-anim", { autoAlpha: .5, yPercent: -250, xPercent: -100, rotation: 20, duration: 5 }, "<.04")
+      .to(".flip-card1-anim-inner", { rotationY: 180 }, ">")
+      .to(".flip-card2-anim-inner", { rotationY: 180 }, ">")
+      .to(".flip-card3-anim-inner", { rotationY: 180 }, ">")
+
+
 
   }, { scope: containerRef });
 
@@ -151,8 +184,8 @@ export default function Home() {
       </section>
 
       {/* Section 3: Services with Flip Cards */}
-      <section className="h-screen bg-background flex items-center justify-center">
-        <div className="w-full max-w-6xl px-4">
+      <section className="sec3-container h-screen bg-background flex items-center justify-center">
+        <div className="cards-flip-container w-full max-w-6xl px-4">
           <div className="text-center mb-12">
             <h2 className="text-5xl font-bold text-primary mb-4 text-balance">Our Services</h2>
             <p className="text-xl text-muted-foreground text-pretty">Hover over the cards to discover more details</p>
@@ -160,8 +193,8 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Flip Card 1 */}
-            <div className="flip-card h-80">
-              <div className="flip-card-inner">
+            <div className="flip-card1-anim flip-card h-80">
+              <div className="flip-card-inner flip-card1-anim-inner">
                 <div className="flip-card-front bg-card border border-border flex flex-col items-center justify-center p-8">
                   <div className="w-16 h-16 bg-primary rounded-full mb-6 flex items-center justify-center">
                     <svg
@@ -197,8 +230,8 @@ export default function Home() {
             </div>
 
             {/* Flip Card 2 */}
-            <div className="flip-card h-80">
-              <div className="flip-card-inner">
+            <div className="flip-card2-anim flip-card h-80">
+              <div className="flip-card-inner flip-card2-anim-inner">
                 <div className="flip-card-front bg-card border border-border flex flex-col items-center justify-center p-8">
                   <div className="w-16 h-16 bg-secondary rounded-full mb-6 flex items-center justify-center">
                     <svg
@@ -234,8 +267,8 @@ export default function Home() {
             </div>
 
             {/* Flip Card 3 */}
-            <div className="flip-card h-80">
-              <div className="flip-card-inner">
+            <div className="flip-card3-anim flip-card h-80">
+              <div className="flip-card-inner flip-card3-anim-inner">
                 <div className="flip-card-front bg-card border border-border flex flex-col items-center justify-center p-8">
                   <div className="w-16 h-16 bg-accent rounded-full mb-6 flex items-center justify-center">
                     <svg
